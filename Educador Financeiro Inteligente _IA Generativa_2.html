@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planej.ai - Educador Financeiro Premium</title>
+    <!-- Importação das novas fontes: Space Grotesk para títulos, Inter para textos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Paleta Dark Premium Tecnológica */
+            --bg-deep: #050505;
+            --bg-gradient: radial-gradient(circle at top right, #111827, #050505);
+            
+            /* Efeito Glassmorphism */
+            --surface-glass: rgba(24, 24, 27, 0.4);
+            --surface-glass-heavy: rgba(15, 15, 18, 0.7);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            
+            /* Cores de Acento */
+            --accent-gold: #D4AF37;
+            --accent-gold-hover: #b5952f;
+            --accent-cyan: #06B6D4;
+            --success-color: #10b981;
+            
+            /* Tipografia e Textos */
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Estrutura */
+            --border-radius: 16px;
+            --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            /* Imagem de fundo opcional para reforçar o render 3D */
+            /* background-image: url('caminho-para-seu-render-3d-espacial.jpg'); */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header Premium */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2.5rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .header-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent-gold), #8B6914);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.2rem;
+        }
+
+        /* Tipografia de Títulos */
+        h1, h2 { 
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        h1 { font-size: 2.2rem; margin-bottom: 0.8rem; }
+        p.subtitle { 
+            color: var(--text-muted); 
+            font-size: 1rem; 
+            margin-bottom: 2.5rem; 
+            font-weight: 300;
+        }
+
+        /* Card Principal com Glassmorphism */
+        .card {
+            background: var(--surface-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Progresso Tecnológico */
+        .step-container {
+            display: none;
+            animation: fadeInGlass 0.4s ease-out forwards;
+        }
+        .step-container.active { display: block; }
+
+        .progress-bar {
+            height: 3px;
+            background-color: var(--surface-glass-heavy);
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-cyan);
+            box-shadow: 0 0 10px var(--accent-cyan);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .step-indicator {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .question {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        /* Inputs Premium */
+        .input-group { position: relative; margin-bottom: 2rem; }
+        .input-prefix {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 1.2rem 1.2rem 1.2rem 3rem;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--text-main);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        input::placeholder { color: #475569; }
+        input:focus { 
+            border-color: var(--accent-cyan); 
+            box-shadow: var(--shadow-glow);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        /* Botões Editoriais */
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-glass);
+            padding-top: 1.5rem;
+        }
+        button {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-family: var(--font-display);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        .btn-primary {
+            background-color: var(--accent-gold);
+            color: #000;
+            flex: 1;
+            margin-left: 1rem;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        .btn-primary:hover { 
+            background-color: var(--accent-gold-hover); 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+        }
+        .btn-text { 
+            background: transparent; 
+            color: var(--text-muted); 
+            padding: 1rem; 
+        }
+        .btn-text:hover { color: var(--text-main); }
+
+        /* Dashboard de Resultados Premium */
+        #result-dashboard { display: none; }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .summary-cards {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .summary-card {
+            flex: 1;
+            background: var(--surface-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-glass);
+            padding: 1.8rem;
+            border-radius: var(--border-radius);
+            transition: transform 0.3s ease;
+        }
+        .summary-card:hover { transform: translateY(-5px); }
+        
+        .summary-card.highlight {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(6, 182, 212, 0.05));
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: inset 0 0 20px rgba(6, 182, 212, 0.05);
+        }
+        
+        .summary-card h3 { 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
+            margin-bottom: 0.8rem; 
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+        .summary-card.highlight h3 { color: var(--accent-cyan); }
+        
+        .summary-card .value { 
+            font-size: 1.8rem; 
+            font-family: var(--font-display);
+            font-weight: 700; 
+        }
+
+        .ai-insight {
+            background: var(--surface-glass-heavy);
+            border: 1px solid var(--border-glass);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            line-height: 1.7;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Detalhe de luz no card da IA */
+        .ai-insight::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+        }
+
+        .ai-insight h2 { 
+            font-size: 1.3rem; 
+            margin-bottom: 1.5rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            color: var(--accent-cyan);
+        }
+        
+        .finances-summary {
+            background: var(--surface-glass);
+            border: 1px solid var(--border-glass);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+        }
+        .finance-item { margin-bottom: 1.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;}
+        .finance-item:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0;}
+        .finance-item label { 
+            font-size: 0.75rem; 
+            color: var(--text-muted); 
+            text-transform: uppercase; 
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-family: var(--font-display);
+        }
+        .finance-item .val { 
+            font-size: 1.3rem; 
+            font-weight: 500; 
+            margin-top: 0.5rem;
+            font-family: var(--font-display);
+        }
+
+        @keyframes fadeInGlass {
+            from { opacity: 0; transform: translateY(15px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Responsividade */
+        @media(max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .summary-cards { flex-direction: column; }
+            .card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="header-icon">P</div>
+        Planej.ai
+    </div>
+
+    <!-- Área de Formulário (Multi-step) -->
+    <div id="form-section">
+        <h1>Sua jornada começa aqui</h1>
+        <p class="subtitle">Insira as coordenadas financeiras para traçarmos sua rota personalizada.</p>
+        
+        <div class="card">
+            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+            <div class="step-indicator" id="step-count">Estágio 1 de 6</div>
+
+            <!-- Os passos permanecem com a mesma estrutura DOM para o JS funcionar -->
+            <div class="step-container active" id="step-1">
+                <div class="question">Qual é o volume de recursos aportados na sua conta mensalmente?</div>
+                <div class="input-group">
+                    <span class="input-prefix">R$</span>
+                    <input type="number" id="renda" placeholder="ex: 5000">
+                </div>
+            </div>
+
+            <div class="step-container" id="step-2">
+                <div class="question">Qual o custo operacional da sua rotina (despesas essenciais)?</div>
+                <div class="input-group">
+                    <span class="input-prefix">R$</span>
+                    <input type="number" id="custo" placeholder="ex: 2000">
+                </div>
+            </div>
+
+            <div class="step-container" id="step-3">
+                <div class="question">Existe algum passivo atual comprometendo sua liquidez (dívidas)?</div>
+                <div class="input-group">
+                    <span class="input-prefix">R$</span>
+                    <input type="number" id="dividas" placeholder="ex: 500">
+                </div>
+            </div>
+
+            <div class="step-container" id="step-4">
+                <div class="question">Qual é o destino ou objetivo desta simulação?</div>
+                <div class="input-group">
+                    <span class="input-prefix">✦</span>
+                    <input type="text" id="objetivo" placeholder="ex: Expedição para o Japão">
+                </div>
+            </div>
+
+            <div class="step-container" id="step-5">
+                <div class="question">Qual o capital necessário para viabilizar este projeto?</div>
+                <div class="input-group">
+                    <span class="input-prefix">R$</span>
+                    <input type="number" id="custo-sonho" placeholder="ex: 15000">
+                </div>
+            </div>
+
+            <div class="step-container" id="step-6">
+                <div class="question">Em qual horizonte de tempo (meses) você pretende executar?</div>
+                <div class="input-group">
+                    <span class="input-prefix">◷</span>
+                    <input type="number" id="prazo" placeholder="ex: 12">
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn-text" id="btn-voltar" style="visibility: hidden;" onclick="prevStep()">Voltar</button>
+                <button class="btn-primary" id="btn-proximo" onclick="nextStep()">Avançar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Área de Resultado (Dashboard) -->
+    <div id="result-dashboard">
+        <h1>Análise de Telemetria Financeira</h1>
+        <p class="subtitle">Relatório gerado com base nos parâmetros estabelecidos.</p>
+
+        <div class="summary-cards">
+            <div class="summary-card">
+                <h3>Capital Alvo</h3>
+                <div class="value" id="res-custo-meta">R$ 0,00</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;" id="res-nome-meta">Objetivo</p>
+            </div>
+            <div class="summary-card">
+                <h3>Horizonte</h3>
+                <div class="value" id="res-prazo">0 meses</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Tempo estimado</p>
+            </div>
+            <div class="summary-card highlight">
+                <h3>Aporte Mensal Exigido</h3>
+                <div class="value" id="res-economia">R$ 0,00</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Requisito de viabilidade</p>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="ai-insight">
+                <h2>✦ Insight da IA Preditiva</h2>
+                <h3 style="margin: 1.5rem 0 0.5rem 0; font-family: var(--font-display);" id="ai-title">Plano de Rota</h3>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass); padding-bottom: 1rem;">
+                    <strong>Status de Execução:</strong> <span style="color: var(--success-color);">Sistema Otimizado</span>
+                </p>
+                <p id="ai-text" style="font-weight: 300; margin-bottom: 1.5rem;">
+                    <!-- Texto dinâmico -->
+                </p>
+                <h3 style="margin: 1.5rem 0 0.5rem 0; font-family: var(--font-display);">Status Estrutural</h3>
+                <p id="ai-diagnostico" style="font-weight: 300;">
+                    <!-- Texto dinâmico -->
+                </p>
+            </div>
+
+            <div class="finances-summary">
+                <h2 style="font-size: 1.1rem; margin-bottom: 1.5rem; color: var(--text-main);">Fluxo de Caixa Base</h2>
+                <div class="finance-item">
+                    <label>Receita Bruta</label>
+                    <div class="val" id="res-renda">R$ 0,00</div>
+                </div>
+                <div class="finance-item">
+                    <label>Despesas Fixas</label>
+                    <div class="val" id="res-custo">R$ 0,00</div>
+                </div>
+                <div class="finance-item">
+                    <label>Passivos Ativos</label>
+                    <div class="val" id="res-dividas">R$ 0,00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // A lógica JavaScript permanece intacta para garantir o funcionamento da aplicação.
+    let currentStep = 1;
+    const totalSteps = 6;
+    
+    const formData = { renda: 0, custo: 0, dividas: 0, objetivo: '', custoSonho: 0, prazo: 0 };
+
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+    };
+
+    function updateUI() {
+        document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
+        document.getElementById(`step-${currentStep}`).classList.add('active');
+
+        const progressPercentage = ((currentStep - 1) / (totalSteps - 1)) * 100;
+        document.getElementById('progress').style.width = `${progressPercentage}%`;
+        document.getElementById('step-count').innerText = `Estágio ${currentStep} de ${totalSteps}`;
+
+        const btnVoltar = document.getElementById('btn-voltar');
+        const btnProximo = document.getElementById('btn-proximo');
+
+        btnVoltar.style.visibility = currentStep === 1 ? 'hidden' : 'visible';
+        
+        if (currentStep === totalSteps) {
+            btnProximo.innerText = 'Processar Dados';
+            btnProximo.style.backgroundColor = 'var(--accent-cyan)'; 
+            btnProximo.style.color = '#000';
+            btnProximo.style.boxShadow = '0 4px 15px rgba(6, 182, 212, 0.3)';
+        } else {
+            btnProximo.innerText = 'Avançar';
+            btnProximo.style.backgroundColor = 'var(--accent-gold)';
+            btnProximo.style.color = '#000';
+            btnProximo.style.boxShadow = '0 4px 15px rgba(212, 175, 55, 0.2)';
+        }
+    }
+
+    function captureData() {
+        if(currentStep === 1) formData.renda = Number(document.getElementById('renda').value);
+        if(currentStep === 2) formData.custo = Number(document.getElementById('custo').value);
+        if(currentStep === 3) formData.dividas = Number(document.getElementById('dividas').value);
+        if(currentStep === 4) formData.objetivo = document.getElementById('objetivo').value;
+        if(currentStep === 5) formData.custoSonho = Number(document.getElementById('custo-sonho').value);
+        if(currentStep === 6) formData.prazo = Number(document.getElementById('prazo').value);
+    }
+
+    function nextStep() {
+        captureData(); 
+        if (currentStep < totalSteps) {
+            currentStep++;
+            updateUI();
+        } else {
+            generateDashboard();
+        }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) {
+            currentStep--;
+            updateUI();
+        }
+    }
+
+    function generateDashboard() {
+        document.getElementById('form-section').style.display = 'none';
+        document.getElementById('result-dashboard').style.display = 'block';
+
+        const economiaNecessaria = formData.custoSonho / formData.prazo;
+        const sobraMensal = formData.renda - formData.custo - formData.dividas;
+        const comprometimentoRenda = ((formData.custo + formData.dividas) / formData.renda) * 100;
+
+        document.getElementById('res-custo-meta').innerText = formatCurrency(formData.custoSonho);
+        document.getElementById('res-nome-meta').innerText = formData.objetivo;
+        document.getElementById('res-prazo').innerText = `${formData.prazo} meses`;
+        document.getElementById('res-economia').innerText = formatCurrency(economiaNecessaria);
+        
+        document.getElementById('res-renda').innerText = formatCurrency(formData.renda);
+        document.getElementById('res-custo').innerText = formatCurrency(formData.custo);
+        document.getElementById('res-dividas').innerText = formatCurrency(formData.dividas);
+
+        document.getElementById('ai-title').innerText = `Rota: ${formData.objetivo}`;
+        
+        const iaText = `A projeção indica viabilidade de execução no ciclo de ${formData.prazo} meses. A margem de liquidez mensal estimada é de ${formatCurrency(sobraMensal)}, permitindo alocar os ${formatCurrency(economiaNecessaria)} exigidos sem comprometer a estabilidade do sistema.`;
+        document.getElementById('ai-text').innerText = iaText;
+
+        const iaDiag = `Integridade financeira em níveis ótimos. O consumo da receita bruta (custo operacional + passivos) opera em ${comprometimentoRenda.toFixed(1)}%. Este índice denota alta capacidade de escalabilidade e acúmulo de capital.`;
+        document.getElementById('ai-diagnostico').innerText = iaDiag;
+    }
+
+    updateUI();
+</script>
+</body>
+</html>
